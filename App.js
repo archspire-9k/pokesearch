@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View, Platform,Image} from 'react-native';
 import Landing from './src/Landing';
 import Search from './src/Search';
+import { NativeBaseProvider } from 'native-base';
 
 export default class App extends React.Component {
   state = {
@@ -24,9 +25,11 @@ export default class App extends React.Component {
   }
   render() {
     return (
+      <NativeBaseProvider>
       <View style={styles.container}>
         {this.renderScreen()}
       </View>
+      </NativeBaseProvider>
     );
   }
 }
