@@ -6,7 +6,7 @@ import { NativeBaseProvider } from 'native-base';
 
 export default class App extends React.Component {
   state = {
-    currentScreen: "search"
+    currentScreen: "landing"
   }
   switchScreen = (currentScreen) =>{
     this.setState({currentScreen});
@@ -26,9 +26,9 @@ export default class App extends React.Component {
   render() {
     return (
       <NativeBaseProvider>
-      <View style={styles.container}>
-        {this.renderScreen()}
-      </View>
+        <View style={styles.container}>
+          {this.renderScreen()}
+        </View>
       </NativeBaseProvider>
     );
   }

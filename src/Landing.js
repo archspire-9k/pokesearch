@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, Platform,Image, Button} from 'react-native';
 //import {Button} from 'native-base';
 
-var myBackGround = require('D:/Projects/pokesearch/assets/icons/landing.jpg');
+var myBackGround = require('../assets/icons/landing.jpg');
 
 class Landing extends React.Component {
   state = {
@@ -19,7 +19,7 @@ render() {
             <Button block = {true}
                     style = {styles.buttonStyle}
                     titleStyle = {styles.buttonText}
-                    onPress = {()=>{}}
+                    onPress = {()=>this.props.switchScreen('search')}
                     title = 'Welcome'
                   ></Button>
 

@@ -1,6 +1,6 @@
 //import stuff
 import React from 'react';
-import { View, TextInput, StyleSheet, Button } from 'react-native';
+import { View, TextInput, StyleSheet, Alert, Button, SafeAreaView } from 'react-native';
 import { Header, Item, Icon, Input} from 'native-base';
 import PokeLoader from './PokeLoader';
 import SearchBody from './SearchBody';
@@ -21,16 +21,42 @@ class Search extends React.Component {
 			return;
 		}
 		var self = this;
-		axios.get("http://pokeapi.co/api/v2/pokemon/" + this.state.pokeSearch.toLowerCase())
+		// console.log("http://pokeapi.co/api/v2/pokemon/" + this.state.pokeSearch.toLowerCase());
+
+		// axios({
+		// 	method: 'post',
+		// 	url: '/user/12345',
+		// 	data: {
+		// 	  firstName: 'Fred',
+		// 	  lastName: 'Flintstone'
+		// 	}
+		//   });
+		axios.get("https://pokeapi.co/api/v2/pokemon/" + this.state.pokeSearch.toLowerCase())
 			.then(function (response) {
-				console.log('a');
-				console.log(response.data);
+				 console.log(response.data);
+				
 				self.setState({ data: response.data });
 				self.setState({ onCall: false });
 			})
 			.catch(function (error) {
-				console.log(error);
-			});
+				Alert.alert("Error", "Pokemon not found");
+				if (error.response) {
+				  // The request was made and the server responded with a status code
+				  // that falls out of the range of 2xx
+				  console.log(error.response.data);
+				  console.log(error.response.status);
+				  console.log(error.response.headers);
+				} else if (error.request) {
+				  // The request was made but no response was received
+				  // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+				  // http.ClientRequest in node.js
+				  console.log(error.request);
+				} else {
+				  // Something happened in setting up the request that triggered an Error
+				  console.log('Error', error.message);
+				}
+				console.log(error.config);
+			  });
 	}
 	renderBody = () => {
 		if (this.state.onCall) {
@@ -48,20 +74,23 @@ class Search extends React.Component {
 	render() {
 
 		return (
-			<View style={{ flex: 1 }}>
-				<Button title = 'search'
-						onPress={this.searchPoke}></Button>
-				<TextInput
-					style={styles.input}
-					value={this.state.pokeSearch}
-					placeholder="Search Pokemon"
-					onChangeText={(pokeSearch) => this.setState({ pokeSearch })}
-				/>
+			<SafeAreaView style={{flex: 1}}>
+				<View style={{ flex: 1 }}>
+					<Button title = 'search'
+							onPress={this.searchPoke}
+							color="#841584"></Button>
+					<TextInput
+						style={styles.input}
+						value={this.state.pokeSearch}
+						placeholder="Search Pokemon"
+						onChangeText={(pokeSearch) => this.setState({ pokeSearch })}
+					/>
 
 
 
-				{this.renderBody()}
-			</View>
+					{this.renderBody()}
+				</View>
+		</SafeAreaView>
 		)
 	}
 }
